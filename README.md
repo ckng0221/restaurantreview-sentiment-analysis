@@ -12,7 +12,19 @@ https://www.kaggle.com/datasets/choonkhonng/malaysia-restaurant-review-datasets
 The deployed Restaurant Review Sentiment Analysis Tool web application can be found on:
 https://restaurant-sentimentanalysis.herokuapp.com/
 
-The Tool can be used either directly on web page submiting the input or directly using REST API.
+The Tool can be used either directly on web page by submiting the input or directly sending POST requests via REST API.
+
+## Directories
+
+**data** : Consists of raw data and cleaned data. Raw data consists of restaurant names at various locations in Malaysia, and the raw data collected.
+
+**notebook** : Consists of the work done on data and linguistic features analytics, and sentiment analysis model development, in Jupyter Notebook.
+
+**webapp** : The source code for the Restaurant Review Sentiment Analysis Tool. 
+
+**webscraping_app** : Consists of the source codes used for the web scraping application for Google reviews and TripAdvisor.
+
+
 
 ========================================================================================
 
