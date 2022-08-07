@@ -16,9 +16,7 @@ The Tool can be used either directly on web page by submiting the input or direc
 
 ## Directories
 
-**data** : Consists of raw data and cleaned data. Raw data consists of restaurant names at various locations in Malaysia, and the raw data collected.
-
-**notebook** : Consists of the work done on data and linguistic features analytics, and sentiment analysis model development, in Jupyter Notebook.
+**notebook** : Consists of the work done on data and linguistic features analytics, and sentiment analysis model development, in Jupyter Notebook. To reference to the data, could download the complete datasets from [Kaggle](https://www.kaggle.com/datasets/choonkhonng/malaysia-restaurant-review-datasets).
 
 **webapp** : The source code for the Restaurant Review Sentiment Analysis Tool. 
 
