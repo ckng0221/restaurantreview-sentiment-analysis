@@ -9,3 +9,13 @@ The repository contains the complete source codes for web scraping application, 
 The collected data is published on Kaggle:
 https://www.kaggle.com/datasets/choonkhonng/malaysia-restaurant-review-datasets
 
+The deployed Restaurant Review Sentiment Analysis Tool web application can be found on:
+https://restaurant-sentimentanalysis.herokuapp.com/
+
+The Tool can be used either directly on web page submiting the input or directly using REST API.
+
+========================================================================================
+
+The work is done for the Research Project for Master of Data Science, by Ng Choon Khon in year 2022. 
+
+========================================================================================

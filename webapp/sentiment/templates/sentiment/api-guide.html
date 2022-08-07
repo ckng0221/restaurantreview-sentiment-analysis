@@ -1,0 +1,140 @@
+{% extends 'sentiment/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="mb-5">
+    <div>
+        <p></p>
+        <h1 class="mb-4">API Guide</h1>
+        <p>
+            The developed <b><code>Restaurant Review Sentiment Analysis Tool</code></b> can be used via
+            REST API.
+        </p>
+        <p>
+            Users can perform POST request in JSON format on the
+            <a href="{% url 'api' %}">
+                API endpoint
+            </a>
+            , to obtain the JSON response of
+            the sentiment analysis
+            <i>(multiclass: {"negative","neutral", "positive"},
+                binary: {"negative", "positive"}
+                )</i>, their coressponding probability,
+            POS tags, and lexicon polarity,
+            based on the input text.
+        </p>
+    </div>
+
+    <hr>
+    <div>
+        <h2 class="mb-4">
+            How to Use
+        </h2>
+        <div class="mb-4">
+            <h4>curl</h4>
+            <div class="card">
+                <div class="card-body">
+                    <pre class="prettyprint" style="border-width: 0px;padding: 0px;margin-bottom: 0px;" ;>
+<code class="language-bash">
+#!bin/bash
+$ curl -X POST {{ url }}/api/ \
+-H 'Content-Type: application/json' \
+-d '{"text": "The food is nice! I will come back again."}'
+</code>
+    </pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h4>Python requests</h4>
+            <div class="card">
+                <div class="card-body">
+                    <pre class="prettyprint" style="border-width: 0px;padding: 0px;margin-bottom: 0px;" ;>
+<code class="language-python">
+#!/usr/bin/python3
+import requests
+
+url = "{{ url }}/api/"
+reviewText = "The food is nice! I will come again."
+r = requests.post(url=url, json={"text": reviewText})
+response = r.json()
+</code>
+    </pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h4>REST Client (Postman)</h4>
+            <div class="card">
+                <div class="card-body">
+                    <code class="prettify">
+                        <img src="{% static 'api-guide/postman-request.png' %}" class="img-fluid" width="700" alt="request" />
+                    </code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <hr>
+
+    <div>
+        <h4 class="mb-2">Example Response</h4>
+        <div>
+            <div class="card">
+                <div class="card-body">
+                    <pre class="prettyprint" style="border-width: 0px;padding: 0px;margin-bottom: 0px;" ;>
+<code style="color:rgb(68, 66, 66)">
+#!/usr/bin/python3
+>>> print(response)
+{
+    "sentiment-analysis": [
+        {
+            "multiclass": {
+                "result": "positive",
+                "probabilities": [
+                    0.12380630096756615,
+                    0.16956764742255728,
+                    0.7066260516098782
+                ]
+            },
+            "binary": {
+                "result": "positive",
+                "probabilities": [
+                    0.1555072256557051,
+                    0.8444927743442937
+                ]
+            }
+        }
+    ],
+    "pos_tags": {
+        "the": "determiner",
+        "food": "noun, singular",
+        "is": "verb, 3rd person",
+        "nice": "adjective",
+        "i": "personal pronoun",
+        "will": "modal",
+        "come": "verb, base form",
+        "back": "adverb",
+        "again": "adverb"
+    },
+    "polarity_score": {
+        "neg": 0.0,
+        "neu": 0.694,
+        "pos": 0.306,
+        "compound": 0.4753
+    }
+}
+</code>
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+</div>
+
+
+{% endblock %}

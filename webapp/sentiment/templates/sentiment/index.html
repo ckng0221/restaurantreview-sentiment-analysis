@@ -1,0 +1,364 @@
+{% extends 'sentiment/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="mb-5">
+  <p>
+  </p>
+  <form method="post">
+    <div class="row row-cols-2 mb-4 my-4">
+      <div class="col-12 col-md-8 mb-4">
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="h3" for="textareainput">Restaurant Review Sentiment Analysis</label>
+          {{ form.textInput }}
+
+          <div>
+            <div class="mt-1 mx-3 text-muted">
+              <small><i><b>Ctrl/⌘ + Enter</b> to submit</i></small>
+            </div>
+            <div class="d-flex justify-content-end">
+              <form>
+
+                <button type="button" id="clear_btn" class="btn btn-danger mr-1 mt-3" onclick="clearInputs()">
+                  Clear
+                </button>
+                <button type="submit" id="submit_btn" type="submit" class="btn btn-primary mr-1 mt-3">
+                  Run
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>
+          <h3>Result</h3>
+          <div class="form-check mb-3">
+            <div class="row">
+              <div class="col-4 col-sm-3col-xs-3 col-sm-3 col-md-5 col-lg-4 col-xl-3">
+                <input class="form-check-input" type="radio" name="classificationType" id="multiclass-radio"
+                  value="multiclass" checked onchange="changeresult()">
+                <label class="form-check-label" for="multiclass-radio">
+                  Multiclass
+                </label>
+              </div>
+              <div class="col-4 col-sm-xs-3 col-sm-3 col-md-5 col-lg-4 col-xl-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="classificationType" id="binary-radio"
+                    value="binary" onchange="changeresult()">
+                  <label class="form-check-label" for="binary-radio">
+                    Binary
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Multiclass Classification -->
+          <div id="multiclass-result">
+            <div class="text-muted">
+              <!-- Positive -->
+              {% if sentimentResult_multiclass == "positive" %}
+              <img src="{% static 'sentiment/Positive.png' %}" width="50" height="50" alt="My image" />
+              <span class="text-success">
+                <b>Positive: {{ positive_multiclass|floatformat:2 }}%</b>
+              </span>
+
+              {% else %}
+              <img src="{% static 'sentiment/Positive_muted.png' %}" width="50" height="50" alt="My image" />
+
+              {% endif %} {% if sentimentResult_multiclass != 'positive' %}
+              <span class="text-muted">
+                Positive: {{ positive_multiclass|floatformat:2 }}% {% endif %}
+                <br />
+              </span>
+
+              <!-- Neutral -->
+              {% if sentimentResult_multiclass == "neutral" %}
+              <img src="{% static 'sentiment/Neutral.png' %}" width="50" height="50" alt="My image" />
+              <span class="text-warning">
+                <b>Neutral: {{ neutral_multiclass|floatformat:2 }}%</b>
+
+                {% else %}
+                <img src="{% static 'sentiment/Neutral_muted.png' %}" width="50" height="50" alt="My image" />
+
+                {% endif %} {% if sentimentResult_multiclass != 'neutral' %}
+                <span class="text-muted"></span>
+                Neutral: {{ neutral_multiclass|floatformat:2 }}% {% endif %}
+              </span>
+              <br />
+
+              <!-- Negative -->
+              {% if sentimentResult_multiclass == "negative" %}
+              <img src="{% static 'sentiment/Negative.png' %}" width="50" height="50" alt="My image" />
+              <span class="text-danger">
+                <b>Negative: {{ negative_multiclass|floatformat:2 }}%</b>
+              </span>
+
+              {% else %}
+              <img src="{% static 'sentiment/Negative_muted.png' %}" width="50" height="50" alt="My image" />
+
+              {% endif %} {% if sentimentResult_multiclass != 'negative' %}
+              <span class="text-muted">
+                Negative: {{ negative_multiclass|floatformat:2 }}% {% endif %}
+                <br />
+              </span>
+
+              {% if sentimentResult_multiclass == 'no result' %}
+              <br />
+              <h3><b>No result</b></h3>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Binary Classification -->
+          <div id="binary-result" style="display: none">
+            <div class="text-muted">
+              <!-- Positive -->
+              {% if sentimentResult_binary == "positive" %}
+              <img src="{% static 'sentiment/Positive.png' %}" width="50" height="50" alt="My image" />
+              <span class="text-success">
+                <b>Positive: {{ positive_binary|floatformat:2 }}%</b>
+              </span>
+
+              {% else %}
+              <img src="{% static 'sentiment/Positive_muted.png' %}" width="50" height="50" alt="My image" />
+
+              {% endif %} {% if sentimentResult_binary != 'positive' %}
+              <span class="text-muted">
+                Positive: {{ positive_binary|floatformat:2 }}% {% endif %}
+                <br />
+              </span>
+
+              <!-- Negative -->
+              {% if sentimentResult_binary == "negative" %}
+              <img src="{% static 'sentiment/Negative.png' %}" width="50" height="50" alt="My image" />
+              <span class="text-danger">
+                <b>Negative: {{ negative_binary|floatformat:2 }}%</b>
+              </span>
+
+              {% else %}
+              <img src="{% static 'sentiment/Negative_muted.png' %}" width="50" height="50" alt="My image" />
+
+              {% endif %} {% if sentimentResult_binary != 'negative' %}
+              <span class="text-muted">
+                Negative: {{ negative_binary|floatformat:2 }}% {% endif %}
+                <br />
+              </span>
+
+              {% if sentimentResult_binary == 'no result' %}
+              <br />
+              <h3><b>No result</b></h3>
+              {% endif %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+  {% if posResult %}
+  <div class="row row-cols-3 mb-4 my-4">
+    <div class="col-md-4 mt-4 mb-4">
+      <div class="mb-4">
+        <h4 class="text-secondary">POS Tagging</h4>
+      </div>
+      <table class="table table-sm">
+        <thead style='background-color: rgb(187, 211, 255);  color: black'>
+          <tr>
+            <th>Word</th>
+            <th>POS Tag</th>
+          </tr>
+        </thead>
+        {% for key, values in posResult.items %}
+        <tr>
+          <td>{{key}}</td>
+          <td>{{values}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div class="col-md-4 mt-4 mb-4">
+      <div class="mb-4">
+        <h4 class="text-secondary">Lexicon Polarity</h4>
+      </div>
+      <div id='polarityChart'></div>
+      <p class="mx-2">
+        <span id="polarityNegative" class="text-muted">
+          -1: Negative
+        </span>
+        &nbsp
+        <span id="polarityNeutral" class="text-muted">
+          0: Neutral
+        </span>
+        &nbsp
+        <span id="polarityPositive" class="text-muted">
+          +1: Positive
+        </span>
+      </p>
+    </div>
+    <div class="col mt-4 mb-4">
+      <div class="mb-4">
+        <h4 class="text-secondary">Polarity Rating</h4>
+      </div>
+      <div class="mb-2">
+        <b>
+          &nbsp;&nbsp;{{starRatingResult}}
+          {% if starRatingResult == '1' %}
+          Star
+          {% else %}
+          Stars
+          {% endif %}
+        </b>
+      </div>
+      <div class="mx-2">
+        {% if starRatingResult == '1' %}
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        {% elif starRatingResult == '2' %}
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        {% elif starRatingResult == '3' %}
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        {% elif starRatingResult == '4' %}
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star"></span>
+        {% elif starRatingResult == '5' %}
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star starchecked"></span>
+        <span class="fa fa-star starchecked"></span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<!-- Multiclass or binary result -->
+<script>
+  function changeresult() {
+    const multiclassRadio = document.getElementById('multiclass-radio')
+    const binaryRadio = document.getElementById('binary-radio')
+
+    const multiclassResult = document.getElementById('multiclass-result')
+    const binaryResult = document.getElementById('binary-result')
+
+    if (multiclassRadio.checked) {
+      // show multiclass results
+      multiclassResult.style.display = 'block';
+      binaryResult.style.display = 'none';
+    } else if (binaryRadio.checked) {
+      // show binary results
+      binaryResult.style.display = 'block';
+      multiclassResult.style.display = 'none';
+    }
+
+  }
+</script>
+
+
+<!-- Submit -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script>
+  
+  // Clear textarea value on click
+  // const clearBtn = document.getElementById("clear_btn");
+  const textArea = document.getElementById("textInput_id");
+  function clearInputs() {
+    textArea.value = "";
+  }
+
+  document.body.addEventListener('keydown', function (e) {
+    if (!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
+
+    var target = e.target;
+    if (target.form) {
+      target.form.submit();
+    }
+  });
+
+</script>
+
+<!-- Polarity chart -->
+<script src='https://cdn.plot.ly/plotly-2.12.1.min.js'></script>
+<script>
+  const neutralLimit = 0.1
+
+  var data = [
+    {
+      domain: { x: [0, 1], y: [0, 1] },
+      value: "{{ polarityResult }}",
+      // title: { text: "Lexicon Polarity" },
+      type: "indicator",
+      mode: "gauge+number",
+
+      gauge: {
+        axis: { range: [-1, 1] },
+        bar: { color: "silver" },
+        steps: [
+          { range: [-1, -neutralLimit], color: "red" },
+          { range: [-neutralLimit, neutralLimit], color: "yellow" },
+          { range: [neutralLimit, 1], color: "green" }
+        ],
+
+      }
+    }
+  ];
+
+  var layout = {
+    width: 350, height: 200,
+    paper_bgcolor: "transparent",
+    margin: { t: 0, b: 0 }
+  };
+  Plotly.newPlot('polarityChart', data, layout);
+
+
+  const polarityResult = "{{polarityResult}}"
+  const negativeText = document.getElementById('polarityNegative')
+  const neutralText = document.getElementById('polarityNeutral')
+  const positiveText = document.getElementById('polarityPositive')
+  if (polarityResult >= -1 && polarityResult < -neutralLimit) {
+    negativeText.innerHTML = negativeText.innerHTML.bold();
+    negativeText.style.color = "red";
+    negativeText.classList.remove("text-muted");
+  } else if (polarityResult >= -neutralLimit && polarityResult < neutralLimit) {
+    neutralText.innerHTML = neutralText.innerHTML.bold();
+    neutralText.classList.add("text-warning");
+    // neutralText.style.color = "yellow";
+    neutralText.classList.remove("text-muted");
+  } else {
+    positiveText.innerHTML = positiveText.innerHTML.bold();
+    positiveText.style.color = "green";
+    positiveText.classList.remove("text-muted");
+  }
+</script>
+
+<!-- StarRating -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+  .starchecked {
+    color: orange;
+  }
+</style>
+
+
+{% endblock %}

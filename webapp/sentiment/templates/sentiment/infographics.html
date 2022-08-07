@@ -1,0 +1,62 @@
+{% extends 'sentiment/base.html' %} {% load static %}
+
+{% block content %}
+<div class="mb-4">
+  <br>
+  <p>
+  <h1>Infographics</h1>
+  </p>
+  
+    <div class="mb-5">
+      <p>
+        <b>Review rating distribution</b>
+      </p>
+      <img class="img-fluid" src="{% static 'infographics/ratingdistribution-average.png' %}" width="800" height="500" alt="My image" />
+    </div>
+  
+    <div class="mb-5">
+      <p>
+        <b>Review distribution by locations</b>
+      </p>
+      <img class="img-fluid" src="{% static 'infographics/ratingdistribution-location.png' %}" width="800" height="500" alt="My image" />
+    </div>
+
+    <div class="mb-5">
+      <p>
+        <b>Sentiment class distribution</b>
+      </p>
+      <img class="img-fluid" src="{% static 'infographics/sentimentclass-distribution.png' %}" width="800" height="500" alt="My image" />
+    </div>
+  
+
+  <div class="mb-5">
+    <p>
+      <b>TripAdvisor Reviews time Series</b>
+    </p>
+    <img class="img-fluid" src="{% static 'infographics/time-series.png' %}" width="800" height="500" alt="My image" />
+  </div>
+  
+  <div class="mb-5">
+    <p>
+      <b>Location Distribution of Collected Data</b>
+    </p>
+    <img class="img-fluid" src="{% static 'infographics/location_distribution.png' %}" width="800" height="500"
+      alt="My image" />
+  </div>
+
+  <div class="mb-5">
+    <p>
+      <b>Word Cloud of Restaurant Reviews</b>
+    </p>
+    <img class="img-fluid" src="{% static 'infographics/word-cloud.png' %}" width="800" height="500" alt="My image" />
+  </div>
+
+  <div class="mb-5">
+    <p>
+      <b>Polarity compound score distribution</b>
+    </p>
+    <img class="img-fluid" src="{% static 'infographics/Compoundscore-distribution.png' %}" width="800" height="500" alt="My image" />
+  </div>
+</div>
+
+{% endblock %}

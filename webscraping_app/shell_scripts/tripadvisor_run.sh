@@ -1,0 +1,1 @@
+python -m webscraping_app.tripadvisor.main -l Ipoh
