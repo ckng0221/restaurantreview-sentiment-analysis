@@ -25,9 +25,8 @@ The Tool can be used either directly on web page by submiting the input or direc
 **webscraping_app** : Consists of the source codes used for the web scraping application for Google reviews and TripAdvisor.
 
 
-
-========================================================================================
+---
 
 The work is done for the Research Project for Master of Data Science, by Ng Choon Khon in year 2022. 
 
-========================================================================================
+---
