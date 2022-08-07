@@ -1,0 +1,16 @@
+{% extends 'sentiment/base.html' %} {% load static %}
+
+{% block content %}
+<div class="mb-4">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{% url 'notebook-sentimentanalysis' %}">Sentiment Analysis</a>
+        </li>
+        <li class="nav-link active">
+            <a class="nav-link" aria-current="page" href="{% url 'notebook-analytics' %}">Analytics</a>
+        </li>
+    </ul>
+</div>
+
+{% include 'notebook/analytics-base.html' %}
+{% endblock %}

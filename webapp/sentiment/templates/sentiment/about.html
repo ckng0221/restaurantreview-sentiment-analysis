@@ -1,0 +1,97 @@
+{% extends 'sentiment/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="mb-5">
+    <p>
+    <h1>About</h1>
+    </p>
+
+    <p>
+        The <b><code>Restaurant Review Sentiment Analysis Tool</code></b> is an online tool that can perform sentiment analysis
+        specialized for restaurant reviews. The core of it is machine learning algorithms in classifying the input review text into
+        multiclass ('positive', 'neutral', 'negative') and binary class ('positive', 'negative') sentiments.
+        The tool also analyzes the linguistic features analytics of input text, including the POS tagging, lexicon polarity, and polarity rating.<br>
+    </p>
+    <p>
+        The sentiment analysis tools used Logistic Regression machine learning model to perform sentiment analysis, 
+        where the model was the best identified model among Multinomial Naive Bayes,
+        Support Vector Machine (SVM), and Random forest. The model was
+        trained using Malaysia restaurant reviews data in different cities, and the textual
+        reviews are processed using Natural Language Processing (NLP).
+    </p>
+    <p>
+        There are 2 ways the tool can be used:
+    <ul>
+        <li><a href="{% url 'index' %}">Online</a> :
+            Input value on the textarea field on the web page to see the result.
+        </li>
+        <li><a href="{% url 'api' %}">REST API</a> :
+            Perform POST request on the API endpoint to get the result.</li>
+    </ul>
+    <hr>
+    </p>
+
+    <div>
+        Using the Sentiment Analysis Tool, you will be getting both <b>multiclass</b>
+        and <b>binary</b> sentiment analysis results:
+        <div>
+            <br>
+            Multiclass:
+            <ul>
+                <li>
+                    <img src="{% static 'sentiment/Positive.png' %}" width="30" height="30" alt="My image">
+                    Positive
+                </li>
+                <li>
+                    <img src="{% static 'sentiment/Neutral.png' %}" width="30" height="30" alt="My image">
+                    Neutral
+                </li>
+                <li>
+                    <img src="{% static 'sentiment/Negative.png' %}" width="30" height="30" alt="My image">
+                    Negative
+                </li>
+            </ul>
+        </div>
+        <div>
+            <br>
+            Binary:
+            <ul>
+                <li>
+                    <img src="{% static 'sentiment/Positive.png' %}" width="30" height="30" alt="My image">
+                    Positive
+                </li>
+                <li>
+                    <img src="{% static 'sentiment/Negative.png' %}" width="30" height="30" alt="My image">
+                    Negative
+                </li>
+            </ul>
+            <br>
+        </div>
+
+        with the corresponding probabilities and for each sentiment, as well as the linguistic features.
+    </div>
+    <hr>
+    <p>
+        The tool is developed for the Research Project of
+        <b>University Malaya</b> as the fullfillment of the Master Degree of Data Science.<br>
+        The tool and web app was developed by <b>Ng Choon Khon (S2028941)</b> in year 2022.
+    </p>
+    <br>
+    <p>The complete source code can be found on the following github repository:</p>
+    <p>
+        <img src="{% static 'about/github-icon.png' %}" height="24" alt="github-icon" />
+        <a href="https://github.com/ckng0221/restaurantreview-sentiment-analysis" target="_blank">
+            ckng0221/restaurantreview-sentiment-analysis
+        </a>
+    </p>
+    <p>The collected restaurant review dataset in this work can be viewed on Kaggle:</p>
+    <img src="{% static 'about/Kaggle_logo.png' %}" height="24" alt="github-icon" />
+    <a href="https://www.kaggle.com/datasets/choonkhonng/malaysia-restaurant-review-datasets" target="_blank">
+        ckng0221/restaurantreview-sentiment-analysis
+    </a>
+
+    <p>&nbsp;</p>
+</div>
+
+{% endblock %}
