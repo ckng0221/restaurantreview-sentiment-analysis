@@ -104,7 +104,7 @@ smart-open @ file:///home/conda/feedstock_root/build_artifacts/smart_open_163023
 sniffio @ file:///Users/runner/miniforge3/conda-bld/sniffio_1648819232259/work
 sortedcontainers @ file:///home/conda/feedstock_root/build_artifacts/sortedcontainers_1621217038088/work
 soupsieve @ file:///home/conda/feedstock_root/build_artifacts/soupsieve_1638550740809/work
-sqlparse==0.4.2
+sqlparse==0.5.0
 stack-data @ file:///home/conda/feedstock_root/build_artifacts/stack_data_1644872665635/work
 statsmodels @ file:///Users/runner/miniforge3/conda-bld/statsmodels_1644535637564/work
 tensorboard @ file:///home/conda/feedstock_root/build_artifacts/tensorboard_1629677129676/work/tensorboard-2.6.0-py3-none-any.whl
